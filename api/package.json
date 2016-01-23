@@ -1,0 +1,31 @@
+{
+  "name": "node-messages-api",
+  "version": "1.0.0",
+  "description": "This API is for message management",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rjriel/node-messages.git"
+  },
+  "keywords": [
+    "Message",
+    "Management",
+    "API",
+    "Palindrome"
+  ],
+  "author": "Rene-Jacques Riel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rjriel/node-messages/issues"
+  },
+  "homepage": "https://github.com/rjriel/node-messages#readme",
+  "dependencies": {
+    "body-parser": "^1.14.2",
+    "express": "^4.13.4",
+    "is-palindrome": "^0.3.0",
+    "mongoose": "^4.3.6"
+  }
+}
