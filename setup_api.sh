@@ -12,5 +12,3 @@ if [ $# -lt 1 ]
 fi
 
 echo $1 > api/mongo.config
-cd api
-node server.js &

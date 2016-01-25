@@ -14,4 +14,3 @@ if [ $# -lt 1 ]
 fi
 
 echo $1 > ui/endpoint.config
-http-server -p 8090 ./ui > /dev/null &
