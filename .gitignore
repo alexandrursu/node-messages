@@ -2,3 +2,5 @@ api/node_modules
 ui/node_modules
 api/*.log
 ui/*.log
+api/*.config
+ui/*.config

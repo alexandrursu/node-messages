@@ -1,10 +1,11 @@
 var express = require('express');
+var fs = require('fs');
 var bodyParser = require('body-parser');
 var mongoose   = require('mongoose');
 var is_palindrome = require('is-palindrome');
 var Message = require('./models/message.js');
 
-var mongoConnectionString = "<mongoConnectionString";
+var mongoConnectionString = fs.readFileSync("mongo.config",{ encoding: "utf-8" });
 
 var app = express();
 var router = express.Router();
@@ -12,7 +13,7 @@ var router = express.Router();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-mongoose.connect(mongoConnectionString); // connect to our database
+mongoose.connect(mongoConnectionString.trim()); // connect to our database
 
 var allowCrossDomain = function(req,res, next) {
   res.header('Access-Control-Allow-Origin', '*');

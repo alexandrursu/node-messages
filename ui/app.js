@@ -5,7 +5,13 @@ nodeMessages.controller('messageController',function ($scope,$http) {
   $scope.currentMessage;
   $scope.newMessage;
   $scope.errorMessage;
-  $scope.messagesEndpoint = "<messagesEndpoint>";
+  $scope.messagesEndpoint;
+  $http.get("endpoint.config")
+    .success(function(data) {
+      $scope.messagesEndpoint = data;
+      // initial load of messages
+      $scope.getMessages();
+    });
 
   // generic method to handle errors. takes a message and error object
   $scope.handleError = function(message, error) {
@@ -34,8 +40,6 @@ nodeMessages.controller('messageController',function ($scope,$http) {
       });
   };
 
-  // initial load of messages
-  $scope.getMessages();
 
   // calls the Node Messages API to remove the given message
   $scope.deleteMessage = function(id) {
@@ -66,6 +70,7 @@ nodeMessages.controller('messageController',function ($scope,$http) {
     console.log($scope.newMessage);
     $http.post($scope.messagesEndpoint,$scope.newMessage)
       .success(function(data) {
+        $scope.newMessage = null;
         $scope.getMessages();
       })
       .error(function(data) {
