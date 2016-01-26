@@ -25,13 +25,17 @@ var allowCrossDomain = function(req,res, next) {
 
 router.route("/messages")
   .post(function(req,res) {
-    var message = new Message();
-    message.text = req.body.text;
-    message.save(function(err) {
+    if (req.body.text == undefined || req.body.text == null) {
+      res.status(422).json({ message: "post missing 'text' parameter" });
+      return;
+    }
+    var newMessage = new Message();
+    newMessage.text = req.body.text;
+    newMessage.save(function(err, message) {
       if (err)
         res.status(err.statusCode || 500).json(err);
       else
-        res.json({ status: 0 });
+        res.json(message);
     });
   })
   .get(function(req,res) {
@@ -50,14 +54,18 @@ router.route("/messages/:id")
       }, function(err, message) {
         if (err)
           res.status(err.statusCode || 500).json(err);
+        else if (message.result.n == 0)
+          res.status(404).json({ message: "record not found"});
         else
-          res.json({status: 0});
+          res.status(200).json({ message: "record deleted"});
       });
   })
   .get(function(req,res) {
     Message.findById(req.params.id,function(err,message) {
       if (err)
         res.status(err.statusCode || 500).json(err);
+      else if (message == null)
+        res.status(404).json({ message: "record not found"});
       else {
         var obj = message.toObject();
         obj.is_palindrome = is_palindrome(obj.text);
