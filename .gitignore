@@ -1,6 +1,9 @@
 api/node_modules
+tests/node_modules
 ui/node_modules
 api/*.log
+tests/*.log
 ui/*.log
 api/*.config
+tests/*.log
 ui/*.config
