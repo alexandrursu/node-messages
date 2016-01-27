@@ -4,8 +4,7 @@ var bodyParser = require('body-parser');
 var mongoose   = require('mongoose');
 var is_palindrome = require('is-palindrome');
 var Message = require('./models/message.js');
-
-var mongoConnectionString = fs.readFileSync("mongo.config",{ encoding: "utf-8" });
+var mongoConnection = require('./mongo.json')
 
 var app = express();
 var router = express.Router();
@@ -13,7 +12,7 @@ var router = express.Router();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-mongoose.connect(mongoConnectionString.trim()); // connect to our database
+mongoose.connect(mongoConnection.uri); // connect to our database
 
 var allowCrossDomain = function(req,res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -54,8 +53,6 @@ router.route("/messages/:id")
       }, function(err, message) {
         if (err)
           res.status(err.statusCode || 500).json(err);
-        else if (message.result.n == 0)
-          res.status(404).json({ message: "record not found"});
         else
           res.status(200).json({ message: "record deleted"});
       });

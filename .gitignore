@@ -4,6 +4,6 @@ ui/node_modules
 api/*.log
 tests/*.log
 ui/*.log
-api/*.config
+api/mongo.json
 tests/*.log
 ui/*.config
