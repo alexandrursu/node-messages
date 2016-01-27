@@ -22,6 +22,11 @@ var allowCrossDomain = function(req,res, next) {
   next();
 };
 
+router.route("/")
+  .get(function(req,res) {
+    res.json({ message: "Welcome to the Messages API" });
+  });
+
 router.route("/messages")
   .post(function(req,res) {
     if (req.body.text == undefined || req.body.text == null) {
