@@ -26,7 +26,7 @@ var allowCrossDomain = function(req,res, next) {
 router.route("/messages")
   .post(function(req,res) {
     if (req.body.text == undefined || req.body.text == null) {
-      res.status(422).json({ message: "post missing 'text' parameter" });
+      res.status(400).json({ message: "post missing 'text' parameter" });
       return;
     }
     var newMessage = new Message();
@@ -35,7 +35,7 @@ router.route("/messages")
       if (err)
         res.status(err.statusCode || 500).json(err);
       else
-        res.json(message);
+        res.json({ id: message._id });
     });
   })
   .get(function(req,res) {
