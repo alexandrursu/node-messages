@@ -15,7 +15,7 @@ This repository is split into 3 main sections.
 
 The Messages API is a <b>Node.js</b> application that implements the <b>REST</b> architecture to deliver functionality for managing messages. It utilizes the <b>mongoose</b> npm package to connect to a <b>MongoDB</b> database to store the messages. A typical implementation would look like this:
 
-[architecture]: https://raw.githubusercontent.com/rjriel/node-messages/master/MessagesAPIArchitecture.png
+![architecture](https://raw.githubusercontent.com/rjriel/node-messages/master/MessagesAPIArchitecture.png)
 
 ### API Documentation
 
