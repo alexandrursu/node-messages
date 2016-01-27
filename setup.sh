@@ -1,3 +1,4 @@
+runinbackground="false";
 if [ $# -lt 2 ]
   then
     echo ""
@@ -13,13 +14,14 @@ if [ $# -lt 2 ]
     exit 0
 fi
 
-./setup_api.sh $1
-./setup_ui.sh $2
-
 if [ $# -eq 3 ]
   then
     if [ $3 == "true" ]
       then
-        ./run.sh
+        runinbackground="true"
     fi
 fi
+
+./setup_api.sh $1 $runinbackground
+./setup_ui.sh $2 $runinbackground
+
