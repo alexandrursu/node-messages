@@ -23,5 +23,6 @@ if [ $# -eq 3 ]
 fi
 
 ./setup_api.sh $1 $runinbackground
+./setup_tests.sh
 ./setup_ui.sh $2 $runinbackground
 

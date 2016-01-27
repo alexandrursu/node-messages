@@ -11,6 +11,10 @@ if [ $# -lt 1 ]
     exit 0
 fi
 
+cd api
+npm install
+cd ..
+
 echo "{ \"uri\": \"$1\" }" > api/mongo.json
 
 if [ $# -gt 1 ]
