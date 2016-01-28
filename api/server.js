@@ -1,33 +1,32 @@
-var express = require('express');
-var fs = require('fs');
-var bodyParser = require('body-parser');
-var mongoose   = require('mongoose');
-var is_palindrome = require('is-palindrome');
-var Message = require('./models/message.js');
+var express = require('express')
+var bodyParser = require('body-parser')
+var mongoose = require('mongoose')
+var is_palindrome = require('is-palindrome')
+var Message = require('./models/message.js')
 var mongoConnection = require('./mongo.json')
 
-var app = express();
-var router = express.Router();
+var app = express()
+var router = express.Router()
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
 
-mongoose.connect(mongoConnection.uri); // connect to our database
+mongoose.connect(mongoConnection.uri) // connect to our database
 
-var allowCrossDomain = function(req,res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
+var allowCrossDomain = function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
+  res.header('Access-Control-Allow-Headers', 'Content-Type')
 
-  next();
-};
+  next()
+}
 
-router.route("/")
-  .get(function(req,res) {
-    res.json({ message: "Welcome to the Messages API" });
-  });
+router.route('/')
+  .get(function (req, res) {
+    res.json({ message: 'Welcome to the Messages API' })
+  })
 
-router.route("/messages")
+router.route('/messages')
   /**
    * @api {post} /messages/ Add Message
    * @apiName AddMessage
@@ -41,23 +40,24 @@ router.route("/messages")
    * @apiSuccessExample {json} Success-Response:
    *     HTTP/1.1 200 OK
    *     {
-   *       "id": "56a5652c55ab891352f11fd0"
+   *       'id': '56a5652c55ab891352f11fd0'
    *     }
    * @apiError (400) BadRequest The text parameter was not specified
    */
-  .post(function(req,res) {
-    if (req.body.text == undefined || req.body.text == null) {
-      res.status(400).json({ message: "post missing 'text' parameter" });
-      return;
+  .post(function (req, res) {
+    if (req.body.text == null) {
+      res.status(400).json({ message: "post missing 'text' parameter" })
+      return
     }
-    var newMessage = new Message();
-    newMessage.text = req.body.text;
-    newMessage.save(function(err, message) {
-      if (err)
-        res.status(err.statusCode || 500).json(err);
-      else
-        res.json({ id: message._id });
-    });
+    var newMessage = new Message()
+    newMessage.text = req.body.text
+    newMessage.save(function (err, message) {
+      if (err) {
+        res.status(err.statusCode || 500).json(err)
+      } else {
+        res.json({ id: message._id })
+      }
+    })
   })
   /**
    * @api {get} /messages/ List Messages
@@ -73,25 +73,26 @@ router.route("/messages")
    *     HTTP/1.1 200 OK
    *     [
    *       {
-   *         "_id": "56a5652c55ab891352f11fd0",
-   *         "text": "first message here"
+   *         '_id': '56a5652c55ab891352f11fd0',
+   *         'text': 'first message here'
    *       },
    *       {
-   *         "_id": "56a5652c55ab891352f11fd5",
-   *         "text": "was it tims mitt i saw"
+   *         '_id': '56a5652c55ab891352f11fd5',
+   *         'text': 'was it tims mitt i saw'
    *       }
    *     ]
    */
-  .get(function(req,res) {
-    Message.find(function(err, messages) {
-      if (err)
-        res.status(err.statusCode || 500).json(err);
-      else
-        res.json(messages);
-    });
-  });
+  .get(function (req, res) {
+    Message.find(function (err, messages) {
+      if (err) {
+        res.status(err.statusCode || 500).json(err)
+      } else {
+        res.json(messages)
+      }
+    })
+  })
 
-router.route("/messages/:id")
+router.route('/messages/:id')
   /**
    * @api {delete} /messages/:id Delete Message
    * @apiName DeleteMessage
@@ -100,23 +101,24 @@ router.route("/messages/:id")
    *
    * @apiDescription Delete a message from the system
    * @apiParam {ObjectID} :id The unique identifier for the message
-   * 
-   * @apiSuccess {String} message The message "record deleted" 
+   *
+   * @apiSuccess {String} message The message 'record deleted'
    * @apiSuccessExample {json} Success-Response:
    *     HTTP/1.1 200 OK
    *     {
-   *       "message": "record deleted"
+   *       'message': 'record deleted'
    *     }
    */
-  .delete(function(req,res) {
+  .delete(function (req, res) {
     Message.remove({
-      _id:req.params.id
-      }, function(err, message) {
-        if (err)
-          res.status(err.statusCode || 500).json(err);
-        else
-          res.status(200).json({ message: "record deleted"});
-      });
+      _id: req.params.id
+    }, function (err, message) {
+      if (err) {
+        res.status(err.statusCode || 500).json(err)
+      } else {
+        res.status(200).json({ message: 'record deleted' })
+      }
+    })
   })
   /**
    * @api {get} /messages/:id Get Message Details
@@ -126,36 +128,36 @@ router.route("/messages/:id")
    *
    * @apiDescription Give details about a message in the system
    * @apiParam {ObjectID} :id The unique identifier for the message
-   * 
-   * @apiSuccess {Object} message The requested message 
+   *
+   * @apiSuccess {Object} message The requested message
    * @apiSuccess {ObjectID} message._id The unique identifier for the message
    * @apiSuccess {String} message.text The message text
    * @apiSuccess {Boolean} message.is_palindrome If the message is a palindrome
    * @apiSuccessExample {json} Success-Response:
    *     HTTP/1.1 200 OK
    *     {
-   *       "_id": "56a5652c55ab891352f11fd0",
-   *       "text": "first message here"
-   *       "is_palindrome": false
+   *       '_id': '56a5652c55ab891352f11fd0',
+   *       'text': 'first message here'
+   *       'is_palindrome': false
    *     }
    * @apiError (404) NotFound The requested message was not found
    * @apiError (500) InternalServerError The identifier specified was invalid
    */
-  .get(function(req,res) {
-    Message.findById(req.params.id,function(err,message) {
-      if (err)
-        res.status(err.statusCode || 500).json(err);
-      else if (message == null)
-        res.status(404).json({ message: "record not found"});
-      else {
-        var obj = message.toObject();
-        obj.is_palindrome = is_palindrome(obj.text);
-        res.json(obj);
+  .get(function (req, res) {
+    Message.findById(req.params.id, function (err, message) {
+      if (err) {
+        res.status(err.statusCode || 500).json(err)
+      } else if (message == null) {
+        res.status(404).json({ message: 'record not found' })
+      } else {
+        var obj = message.toObject()
+        obj.is_palindrome = is_palindrome(obj.text)
+        res.json(obj)
       }
-    });
-  });
+    })
+  })
 
-app.use(allowCrossDomain);
-app.use("/",router);
+app.use(allowCrossDomain)
+app.use('/', router)
 
-app.listen(8080);
+app.listen(8080)
