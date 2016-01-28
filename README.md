@@ -17,6 +17,12 @@ The Messages API is a <b>Node.js</b> application that implements the <b>REST</b>
 
 ![architecture](https://raw.githubusercontent.com/rjriel/node-messages/master/MessagesAPIArchitecture.png)
 
+### Use Cases
+
+Here are some sequence diagrams of the different use cases for this API.
+
+![sequence diagram](https://raw.githubusercontent.com/rjriel/node-messages/master/MessagesAPISequence.png)
+
 ### API Documentation
 
 The api documentation can be found at http://rjriel.github.io
