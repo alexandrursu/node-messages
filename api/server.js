@@ -3,12 +3,14 @@ var bodyParser = require('body-parser')
 var mongoose = require('mongoose')
 var isPalindrome = require('is-palindrome')
 var Message = require('./models/message.js')
+
 try {
   var mongoConnection = require('./mongo.json')
 } catch (e) {
   console.log('Mongo connection file does not exist')
   process.exit()
 }
+
 var app = express()
 var router = express.Router()
 
