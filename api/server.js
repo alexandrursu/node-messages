@@ -6,7 +6,7 @@ var Message = require('./models/message.js')
 try {
   var mongoConnection = require('./mongo.json')
 } catch (e) {
-  console.log("Mongo connection file does not exist")
+  console.log('Mongo connection file does not exist')
   process.exit()
 }
 var app = express()
