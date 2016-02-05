@@ -6,11 +6,14 @@ nodeMessages.controller('messageController', function ($scope, $http) {
   $scope.newMessage
   $scope.errorMessage
   $scope.messagesEndpoint
-  $http.get('endpoint.config')
-    .success(function (data) {
+  $http.get('endpoint.config').then(
+    function (data) {
       $scope.messagesEndpoint = data
       // initial load of messages
       $scope.getMessages()
+    },
+    function (err) {
+      $scope.handleError('Endpoint Config not found', err)
     })
 
   // generic method to handle errors. takes a message and error object
@@ -32,22 +35,22 @@ nodeMessages.controller('messageController', function ($scope, $http) {
 
   // retrieves messages from the Node Messages API
   $scope.getMessages = function () {
-    $http.get($scope.messagesEndpoint)
-      .success(function (data) {
+    $http.get($scope.messagesEndpoint).then(
+      function (data) {
         $scope.messages = data
-      })
-      .error(function (data) {
+      },
+      function (data) {
         $scope.handleError('Error retrieving messages', data)
       })
   }
 
   // calls the Node Messages API to remove the given message
   $scope.deleteMessage = function (id) {
-    $http.delete($scope.messagesEndpoint + id)
-      .success(function (data) {
+    $http.delete($scope.messagesEndpoint + id).then(
+      function (data) {
         $scope.getMessages()
-      })
-      .error(function (data) {
+      },
+      function (data) {
         $scope.handleError('Error deleting message', data)
       })
   }
@@ -55,12 +58,12 @@ nodeMessages.controller('messageController', function ($scope, $http) {
   // calls the Node Messages API to retrieve details about
   // the given message
   $scope.showDetails = function (id) {
-    $http.get($scope.messagesEndpoint + id)
-      .success(function (data) {
+    $http.get($scope.messagesEndpoint + id).then(
+      function (data) {
         $scope.currentMessage = data
         $('#detailsModal').modal('show')
-      })
-      .error(function (data) {
+      },
+      function (data) {
         $scope.handleError('Error retrieving details', data)
       })
   }
@@ -68,12 +71,12 @@ nodeMessages.controller('messageController', function ($scope, $http) {
   // calls the Node Messages API to add a message
   $scope.addMessage = function () {
     console.log($scope.newMessage)
-    $http.post($scope.messagesEndpoint, $scope.newMessage)
-      .success(function (data) {
+    $http.post($scope.messagesEndpoint, $scope.newMessage).then(
+      function (data) {
         $scope.newMessage = null
         $scope.getMessages()
-      })
-      .error(function (data) {
+      },
+      function (data) {
         $scope.handleError('Error adding message', data)
       })
   }
