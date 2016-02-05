@@ -1,7 +1,7 @@
 var express = require('express')
 var bodyParser = require('body-parser')
 var mongoose = require('mongoose')
-var is_palindrome = require('is-palindrome')
+var isPalindrome = require('is-palindrome')
 var Message = require('./models/message.js')
 var mongoConnection = require('./mongo.json')
 
@@ -132,13 +132,13 @@ router.route('/messages/:id')
    * @apiSuccess {Object} message The requested message
    * @apiSuccess {ObjectID} message._id The unique identifier for the message
    * @apiSuccess {String} message.text The message text
-   * @apiSuccess {Boolean} message.is_palindrome If the message is a palindrome
+   * @apiSuccess {Boolean} message.isPalindrome If the message is a palindrome
    * @apiSuccessExample {json} Success-Response:
    *     HTTP/1.1 200 OK
    *     {
    *       '_id': '56a5652c55ab891352f11fd0',
    *       'text': 'first message here'
-   *       'is_palindrome': false
+   *       'isPalindrome': false
    *     }
    * @apiError (404) NotFound The requested message was not found
    * @apiError (500) InternalServerError The identifier specified was invalid
@@ -151,7 +151,7 @@ router.route('/messages/:id')
         res.status(404).json({ message: 'record not found' })
       } else {
         var obj = message.toObject()
-        obj.is_palindrome = is_palindrome(obj.text)
+        obj.isPalindrome = isPalindrome(obj.text)
         res.json(obj)
       }
     })
