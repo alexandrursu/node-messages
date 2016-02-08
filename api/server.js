@@ -44,7 +44,7 @@ router.route('/messages')
    *
    * @apiSuccess {ObjectID} id The unique identifier for the message
    * @apiSuccessExample {json} Success-Response:
-   *     HTTP/1.1 200 OK
+   *     HTTP/1.1 201 Created
    *     {
    *       'id': '56a5652c55ab891352f11fd0'
    *     }
