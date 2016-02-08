@@ -61,7 +61,7 @@ router.route('/messages')
       if (err) {
         res.status(err.statusCode || 500).json(err)
       } else {
-        res.json({ id: message._id })
+        res.status(201).json({ id: message._id })
       }
     })
   })
