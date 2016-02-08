@@ -39,7 +39,7 @@ router.route('/messages')
    * @apiGroup Message
    * @apiVersion 1.0.0
    *
-   * @apiDescription Add a message to the system
+   * @apiDescription Add a new message to the system
    * @apiParam {String} text The text for the message
    *
    * @apiSuccess {ObjectID} id The unique identifier for the message
