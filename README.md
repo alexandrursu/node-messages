@@ -17,12 +17,6 @@ The Messages API is a <b>Node.js</b> application that implements the <b>REST</b>
 
 ![architecture image](https://raw.githubusercontent.com/rjriel/node-messages/master/MessagesAPIArchitecture.png)
 
-## Example
-
-An example of the API is available at http://rjriel-api.elasticbeanstalk.com. This implementation is deployed to the AWS Elastic Beanstalk service using a Dockerfile and stores the messages in a MongoDB hosted by MongoLab.
-
-An example of the UI is available at http://rjriel-ui.elasticbeanstalk.com. This implementation is also deployed to the AWS Elastic Beanstalk service using a Dockerfile and utilizes the API mentioned above.
-
 ## Use Cases
 
 Here are some sequence diagrams of the different use cases for this API.
